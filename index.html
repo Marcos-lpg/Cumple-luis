@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Invitación - La Granja de Luis</title>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Comic Sans MS", cursive;
+      text-align: center;
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    /* Fondo */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: url("https://i.pinimg.com/1200x/3d/42/b2/3d42b2a869376e2cd8071d7e4286f216.jpg")
+        no-repeat center center;
+      background-size: cover;
+      filter: brightness(0.55);
+      z-index: -1;
+    }
+
+    .box {
+      background: rgba(0,0,0,0.55);
+      padding: 35px;
+      margin: 40px auto;
+      width: 90%;
+      max-width: 800px;
+      border-radius: 18px;
+      box-shadow: 0 0 20px rgba(255,255,255,0.3);
+      position: relative;
+    }
+
+    /* COLORES ORIGINALES */
+    h1, h2, p {
+      color: #ffdd49;
+      text-shadow: 3px 3px #000;
+    }
+    h1 { font-size: 2.4rem; }
+    p { font-size: 1.4rem; }
+
+    /* 🎨 ANIMACIÓN RGB */
+    .rgb-active h1,
+    .rgb-active h2,
+    .rgb-active p {
+      animation: rgbText 1.3s infinite linear;
+    }
+
+    @keyframes rgbText {
+      0%   { color: red; }
+      25%  { color: yellow; }
+      50%  { color: lime; }
+      75%  { color: cyan; }
+      100% { color: magenta; }
+    }
+
+    .foto img {
+      width: 390px;
+      max-width: 100%; /* ✔ evita que se corte en teléfonos */
+      border-radius: 20px;
+      object-fit: cover;
+      border: 4px solid #ffe97d;
+      box-shadow: 0 0 25px rgba(255,255,0,0.7);
+      margin-top: 20px;
+    }
+
+    /* Botones */
+    .btn {
+      display: block;
+      width: 80%;
+      max-width: 350px;
+      padding: 14px 20px;
+      margin: 15px auto;
+      background: #ffe97d;
+      color: #000;
+      text-decoration: none;
+      border-radius: 30px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+      box-sizing: border-box;
+      text-align: center;
+    }
+
+    .btn:hover {
+      background: #ffdd49;
+    }
+
+    /* Botón de música */
+    #playMusic {
+      position: absolute;
+      right: 15px;
+      top: 15px;
+      background: #ffe97d;
+      color: #000;
+      border: none;
+      padding: 10px 14px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 1.1rem;
+      font-weight: bold;
+    }
+
+    /* 📱 RESPONSIVO PARA CELULARES */
+    @media (max-width: 480px) {
+      h1 { font-size: 1.9rem; }
+      h2 { font-size: 1.3rem; }
+      p  { font-size: 1.2rem; }
+
+      #playMusic {
+        top: 10px;
+        right: 10px;
+        padding: 8px 12px;
+      }
+
+      .box {
+        padding: 25px;
+        margin-top: 20px;
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Música -->
+  <audio id="audio" loop>
+    <source src="audio_tiktok.mp3" type="audio/mpeg">
+  </audio>
+
+  <div class="box">
+
+    <button id="playMusic">🎵</button>
+
+    <h1>🐔 ¡Bienvenido a la Granja de Luis! 🌾</h1>
+    <h2>Estás invitado a una celebración muy especial</h2>
+
+    <div class="foto">
+      <img src="granga.png">
+    </div>
+
+    <p>
+      Zenón y todos los animales te esperan para pasar un día lleno de diversión, y mucha alegría.
+    </p>
+
+    <p style="font-size: 1.4rem; font-weight: bold; margin-top: 25px;">
+      📅 Fecha: 21 de diciembre 2025 <br>
+      🕒 Hora: 4:00 PM
+    </p>
+
+    <!-- Botón ubicación -->
+    <a class="btn" href="https://maps.app.goo.gl/H7uZU7mez7gZgyus7" target="_blank">
+      📍 Ver Ubicación
+    </a>
+
+    <!-- Botón confirmar -->
+    <a href="https://wa.me/529821032558?text=%C2%A1Holaaa!%20Vengo%20a%20confirmar%20mi%20asistencia%20a%20la%20fiesta%20en%20la%20Granja" 
+       class="btn" target="_blank">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" 
+           alt="WhatsApp" style="width:22px;">
+      Confirmar asistencia
+    </a>
+
+  </div>
+
+  <!-- SCRIPT DE MÚSICA + RGB -->
+  <script>
+  const audio = document.getElementById("audio");
+  const btn = document.getElementById("playMusic");
+  const box = document.querySelector(".box");
+
+  let playing = false;
+  let started = false;
+
+  function updateRGB() {
+    if (playing) {
+      box.classList.add("rgb-active");
+    } else {
+      box.classList.remove("rgb-active");
+    }
+  }
+
+  btn.addEventListener("click", () => {
+    if (!started) {
+      audio.play();
+      started = true;
+      playing = true;
+      btn.textContent = "⏸️";
+      updateRGB();
+      return;
+    }
+
+    if (playing) {
+      audio.pause();
+      playing = false;
+      btn.textContent = "🎵";
+      updateRGB();
+    } else {
+      audio.play();
+      playing = true;
+      btn.textContent = "⏸️";
+      updateRGB();
+    }
+  });
+
+  document.addEventListener("click", function firstPlay() {
+    if (!started) {
+      audio.play();
+      started = true;
+      playing = true;
+      btn.textContent = "⏸️";
+      updateRGB();
+    }
+    document.removeEventListener("click", firstPlay);
+  });
+</script>
+
+</body>
+</html>
